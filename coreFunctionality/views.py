@@ -5,6 +5,7 @@ from . models import item
 
 def itemList (request):
     context = { 'items' : item.objects.all() }  # Assigns all items on the store to the variable name "items"
-    return render(request, "homepage.html", context)
+    return render(request, "homepage.html/", context)
 
-
+def checkoutPage (request):
+    return render(request, "checkoutPage.html/")
