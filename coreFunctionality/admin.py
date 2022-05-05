@@ -1,6 +1,6 @@
 # Register your models here.
 from django.contrib import admin
-from .models import item, orderItem, order
+from . models import item, orderItem, order
 
 admin.site.site_header = "Administration for Zim's Ecommerce Site"  # Changes the header of the adming page
 
