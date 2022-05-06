@@ -4,10 +4,23 @@ from tkinter import CASCADE
 from django.db import models
 from django.conf import settings
 
+CATEGORIES = (  # Left value of each tuple element is what is deisplayed in the data base. Right value of each tuple element is what is displayed on screen
+    ('S', 'Shirt'),
+    ('SW', 'Sport Wear'),
+    ('OW', 'Outwear'),
+)
+
+LABELCHOICES = (    # Color choices for the labels. Primary, secondary & danger 
+    ('P', 'primary'),
+    ('S', 'secondary'),
+    ('D', 'danger'),    
+)
 
 class item (models.Model):                  # Stores individual items that can be ordered by a user
     name = models.CharField(max_length=50)  # Name of the item
     price = models.FloatField()             # Price of the item
+    category = models.CharField(max_length=2, choices=CATEGORIES, default='S')   # Category that the item is under
+    label = models.CharField(max_length=1, choices=LABELCHOICES, default='P')    # Type of label that an item has (if it has one)
 
     def __str__(self):
         return self.name                    # Items will be listed in the database using the item name
