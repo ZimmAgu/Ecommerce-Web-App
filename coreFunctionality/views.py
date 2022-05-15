@@ -9,3 +9,6 @@ def homePage (request):
 
 def checkoutPage (request):
     return render(request, "checkoutPage.html/")
+
+def productPage (request):
+    return render(request, "productPage.html/")
