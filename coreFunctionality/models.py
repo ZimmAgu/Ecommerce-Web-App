@@ -22,6 +22,7 @@ class item (models.Model):                  # Stores individual items that can b
     category = models.CharField(max_length=2, choices=CATEGORIES, default='S')   # Category that the item is under
     label = models.CharField(max_length=1, choices=LABELCHOICES, default='P')    # Type of label that an item has (if it has one)
     slug = models.SlugField()
+    description = models.TextField(default="This is a product")
 
     def __str__ (self):
         return self.name                    # Items will be listed in the database using the item name
