@@ -16,6 +16,8 @@ LABELCHOICES = (    # Color choices for the labels. Primary, secondary & danger
     ('D', 'danger'),    
 )
 
+
+
 class Item(models.Model):                  # Stores individual items that can be ordered by a user
     name = models.CharField(max_length=50)  # Name of the item
     price = models.FloatField()             # Price of the item
@@ -27,16 +29,23 @@ class Item(models.Model):                  # Stores individual items that can be
     def __str__(self):
         return self.name                    # Items will be listed in the database using the item name
 
-    def get_absolute_url(self):             # Retrieves the specific requested item using the slug
-        return reverse('coreFunctionality:productView', kwargs={'slug':self.slug})
+    def get_absolute_url(self):             # Retrieves the specific requested item got the product viewe page using the slug of the item
+        return reverse('coreFunctionality:productView', kwargs={'slug' : self.slug})
+
+    def get_Add_To_Cart_URL(self):
+        return reverse('coreFunctionality:addToCartView', kwargs={'slug' : self.slug})
+
 
 
 class OrderItem(models.Model):                                  # Once a user adds an item to the shopping cart, it becomes an order item
     item = models.ForeignKey(Item, on_delete=models.CASCADE)    # item that belongs to a specific order
+    quantity = models.IntegerField(default=1)                   # Amounr of the item ordered
+
+    def __str__(self):
+        return f"{self.quantity} of {self.item.name}"
 
 
-
-class Order(models.Model):                             # Stores all of the items that the user has added to the cart
+class Order(models.Model):                              # Stores all of the items that the user has added to the cart
     user = models.ForeignKey(settings.AUTH_USER_MODEL,  # User that the order belongs to
                             on_delete=models.CASCADE)  
 
