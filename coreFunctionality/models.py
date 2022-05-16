@@ -16,7 +16,7 @@ LABELCHOICES = (    # Color choices for the labels. Primary, secondary & danger
     ('D', 'danger'),    
 )
 
-class item (models.Model):                  # Stores individual items that can be ordered by a user
+class item(models.Model):                  # Stores individual items that can be ordered by a user
     name = models.CharField(max_length=50)  # Name of the item
     price = models.FloatField()             # Price of the item
     category = models.CharField(max_length=2, choices=CATEGORIES, default='S')   # Category that the item is under
@@ -24,19 +24,19 @@ class item (models.Model):                  # Stores individual items that can b
     slug = models.SlugField()
     description = models.TextField(default="This is a product")
 
-    def __str__ (self):
+    def __str__(self):
         return self.name                    # Items will be listed in the database using the item name
 
-    def get_absolute_url (self):
+    def get_absolute_url(self):
         return reverse('coreFunctionality:productView', kwargs={'slug':self.slug})
 
 
-class orderItem (models.Model):                         # Once a user adds an item to the shopping cart, it becomes an order item
-    item = models.ForeignKey(item,                      # item that belongs to a specific order
-                            on_delete=models.CASCADE)
+class orderItem(models.Model):                                  # Once a user adds an item to the shopping cart, it becomes an order item
+    item = models.ForeignKey(item, on_delete=models.CASCADE)    # item that belongs to a specific order
 
 
-class order (models.Model):                             # Stores all of the items that the user has added to the cart
+
+class order(models.Model):                             # Stores all of the items that the user has added to the cart
     user = models.ForeignKey(settings.AUTH_USER_MODEL,  # User that the order belongs to
                             on_delete=models.CASCADE)  
 
@@ -45,5 +45,5 @@ class order (models.Model):                             # Stores all of the item
     ordered = models.BooleanField(default=False)        # Whether or not the items in the shopping cart have been ordered
     dateOrdered = models.DateTimeField()                # Moment that the items in t
 
-    def __str__ (self):
+    def __str__(self):
         return self.user.username                       # Orders will be listed in the database using the username of the user that has made the order
