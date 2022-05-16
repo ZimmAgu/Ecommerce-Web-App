@@ -16,7 +16,7 @@ LABELCHOICES = (    # Color choices for the labels. Primary, secondary & danger
     ('D', 'danger'),    
 )
 
-class item(models.Model):                  # Stores individual items that can be ordered by a user
+class Item(models.Model):                  # Stores individual items that can be ordered by a user
     name = models.CharField(max_length=50)  # Name of the item
     price = models.FloatField()             # Price of the item
     category = models.CharField(max_length=2, choices=CATEGORIES, default='S')   # Category that the item is under
@@ -27,20 +27,20 @@ class item(models.Model):                  # Stores individual items that can be
     def __str__(self):
         return self.name                    # Items will be listed in the database using the item name
 
-    def get_absolute_url(self):
+    def get_absolute_url(self):             # Retrieves the specific requested item using the slug
         return reverse('coreFunctionality:productView', kwargs={'slug':self.slug})
 
 
-class orderItem(models.Model):                                  # Once a user adds an item to the shopping cart, it becomes an order item
-    item = models.ForeignKey(item, on_delete=models.CASCADE)    # item that belongs to a specific order
+class OrderItem(models.Model):                                  # Once a user adds an item to the shopping cart, it becomes an order item
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)    # item that belongs to a specific order
 
 
 
-class order(models.Model):                             # Stores all of the items that the user has added to the cart
+class Order(models.Model):                             # Stores all of the items that the user has added to the cart
     user = models.ForeignKey(settings.AUTH_USER_MODEL,  # User that the order belongs to
                             on_delete=models.CASCADE)  
 
-    items = models.ManyToManyField(orderItem)           # Every order can have multiple items, and every item can be in multiple orders 
+    items = models.ManyToManyField(OrderItem)           # Every order can have multiple items, and every item can be in multiple orders 
     dateAdded = models.DateTimeField(auto_now_add=True) # Moment that the order was created
     ordered = models.BooleanField(default=False)        # Whether or not the items in the shopping cart have been ordered
     dateOrdered = models.DateTimeField()                # Moment that the items in t
