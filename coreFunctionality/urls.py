@@ -6,5 +6,5 @@ app_name="coreFunctionality"
 urlpatterns = [
     path('', views.homePage),               # Item list will be the homepage
     path('checkout/', views.checkoutPage),  # Item list will be the homepage
-    path('detailed/', views.productPage)
+    path('product/<slug:slug>/', views.productPage, name="productView")
 ]

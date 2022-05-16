@@ -1,5 +1,5 @@
 # Create your views here.
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from . models import item
 
@@ -10,5 +10,7 @@ def homePage (request):
 def checkoutPage (request):
     return render(request, "checkoutPage.html/")
 
-def productPage (request):
-    return render(request, "productPage.html/")
+def productPage (request, slug):
+    products = get_object_or_404(item, slug=slug)
+    context = {'item' : products}
+    return render(request, "productPage.html/", context)

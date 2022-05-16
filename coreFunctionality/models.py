@@ -2,6 +2,7 @@
 from email.policy import default
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 CATEGORIES = (  # Left value of each tuple element is what is deisplayed in the data base. Right value of each tuple element is what is displayed on screen
     ('S', 'Shirt'),
@@ -20,9 +21,13 @@ class item (models.Model):                  # Stores individual items that can b
     price = models.FloatField()             # Price of the item
     category = models.CharField(max_length=2, choices=CATEGORIES, default='S')   # Category that the item is under
     label = models.CharField(max_length=1, choices=LABELCHOICES, default='P')    # Type of label that an item has (if it has one)
+    slug = models.SlugField()
 
-    def __str__(self):
+    def __str__ (self):
         return self.name                    # Items will be listed in the database using the item name
+
+    def get_absolute_url (self):
+        return reverse('coreFunctionality:productView', kwargs={'slug':self.slug})
 
 
 class orderItem (models.Model):                         # Once a user adds an item to the shopping cart, it becomes an order item
@@ -39,5 +44,5 @@ class order (models.Model):                             # Stores all of the item
     ordered = models.BooleanField(default=False)        # Whether or not the items in the shopping cart have been ordered
     dateOrdered = models.DateTimeField()                # Moment that the items in t
 
-    def __str__(self):
+    def __str__ (self):
         return self.user.username                       # Orders will be listed in the database using the username of the user that has made the order
