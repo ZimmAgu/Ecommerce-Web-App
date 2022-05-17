@@ -14,9 +14,9 @@ from . models import Item, OrderItem, Order
 from datetime import datetime
 
 class homePageListView(ListView):
-    model = Item
-    template_name = "homepage.html"
-    paginate_by = 1
+    model = Item                        # Model that this view is based on
+    template_name = "homepage.html"     # Template that this view is used to bring up
+    paginate_by = 1                     # Amount of items that go on each page
 
 
 def checkoutPage(request):
