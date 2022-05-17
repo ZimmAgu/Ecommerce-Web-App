@@ -4,6 +4,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from django.views.generic import ListView
+from django.core.paginator import Paginator
 
 # Model imports
 from . models import Item, OrderItem, Order
@@ -11,9 +13,9 @@ from . models import Item, OrderItem, Order
 # Miscellaneous imports
 from datetime import datetime
 
-def homePage(request):
-    context = { 'items' : Item.objects.all() }      # Assigns all items on the store to the variable name "items"
-    return render(request, "homepage.html/", context)
+class homePageListView(ListView):
+    model = Item
+    template_name = "homepage.html"
 
 
 def checkoutPage(request):
