@@ -87,6 +87,7 @@ AUTHENTICATION_BACKENDS = [
 WSGI_APPLICATION = 'storeFront.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
