@@ -38,8 +38,13 @@ class Item(models.Model):                  # Stores individual items that can be
 
 
 class OrderItem(models.Model):                                  # Once a user adds an item to the shopping cart, it becomes an order item
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,          # User that the order item belongs to
+                            on_delete=models.CASCADE)  
     item = models.ForeignKey(Item, on_delete=models.CASCADE)    # item that belongs to a specific order
-    quantity = models.IntegerField(default=1)                   # Amounr of the item ordered
+    quantity = models.IntegerField(default=1)                   # Amount of the item ordered
+    ordered = models.BooleanField(default=False)                # Whether or not the specific item was ordered
+
+
 
     def __str__(self):
         return f"{self.quantity} of {self.item.name}"

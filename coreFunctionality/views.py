@@ -17,16 +17,23 @@ def productPage(request, slug):
     return render(request, "productPage.html/", context)
 
 def addToCart(request, slug):
-    product = get_object_or_404(Item, slug=slug)        # Returns the item with the requested slug
-    orderItem = OrderItem.objects.create(item=product)  # Adds an instance of the requested item to the OrderItem table
+    product = get_object_or_404(Item, slug=slug)            # Returns the item with the requested slug
+
+    orderItem, created = OrderItem.objects.get_or_create(   # Adds an instance of the requested item to the OrderItem table
+            item=product, 
+            user=request.user, 
+            ordered=False)  
+
     orderQuerySet = Order.objects.filter(user=request.user, ordered=False)  # The items in the current user's shopping cart that have not been ordered
 
     if orderQuerySet.exists():      # If there are any items in the user's shopping cart that have been ordered
         order = orderQuerySet[0]    # Assigns the order found in the order query set to a variable
 
-        if order.items.filter(product__slug=product.slug).exist():  # If the requested item is already in the cart
+        if order.items.filter(item__slug=product.slug).exists():  # If the requested item is already in the cart
             orderItem.quantity += 1                                 # Increase the quantity of the ordered item by 1
             orderItem.save()                                        # Then save the changes made to the order item table
+        else:                                                       # If the requested item is not in the cat
+            order.items.add(orderItem)                              # Then add it to the cart
     else:                                                   # If  there are not any items in the user's shopping cart that have been ordered
         currentTime = datetime.now()
         order = Order.objects.create(user=request.user, dateOrdered=currentTime)     # Create a new order for the user
