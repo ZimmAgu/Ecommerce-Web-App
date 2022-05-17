@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -46,8 +47,8 @@
   </style>
 </head>
 
+{% block content %}
 <body>
-
   <!-- Navbar -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
     <div class="container">
@@ -90,11 +91,20 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link waves-effect" href='/'>
-              <span class="clearfix d-none d-sm-inline-block"> Logout </span>
-            </a>
-          </li>
+          <form method="post" action="{% url 'account_logout' %}" id="logoutForm">
+            <li class="nav-item">
+              {% csrf_token %}
+              
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+              {% endif %}
+
+              <a class="nav-link waves-effect" href="javascript:{}" onclick="document.getElementById('logoutForm').submit(); return false;">
+                <span class="clearfix d-none d-sm-inline-block"> Logout </span>
+              </a>
+            </li>
+          </form>
+
           {% else %}
           <li class="nav-item">
             <a class="nav-link waves-effect" href='accounts/login/'>
@@ -440,5 +450,6 @@
 
   </script>
 </body>
+{% endblock content %}
 
 </html>
