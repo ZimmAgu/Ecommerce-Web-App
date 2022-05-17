@@ -6,7 +6,7 @@ from django.urls import reverse
 
 CATEGORIES = (  # Left value of each tuple element is what is deisplayed in the data base. Right value of each tuple element is what is displayed on screen
     ('S', 'Shirt'),
-    ('SW', 'Sport Wear'),
+    ('SW', 'Sports Wear'),
     ('OW', 'Outwear'),
 )
 
