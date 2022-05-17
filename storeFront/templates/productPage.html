@@ -1,4 +1,7 @@
+{% extends "base.html" %}
 {% load static %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +20,7 @@
   <link href="{% static '/css/style.min.css' %}" rel="stylesheet">
 </head>
 
+{% block content %}
 <body>
 
   <!-- Navbar -->
@@ -282,5 +286,6 @@
 
   </script>
 </body>
+{% endblock content %}
 
 </html>

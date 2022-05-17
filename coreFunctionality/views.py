@@ -1,7 +1,14 @@
 # Create your views here.
+
+# Django imports
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.contrib import messages
+
+# Model imports
 from . models import Item, OrderItem, Order
+
+# Miscellaneous imports
 from datetime import datetime
 
 def homePage(request):
@@ -29,22 +36,29 @@ def addToCart(request, slug):
     )  
 
     orderQuerySet = Order.objects.filter(user=request.user, ordered=False)  # The items in the current user's shopping cart that have not been ordered
+    response = redirect('coreFunctionality:productView', slug=slug)  
+
 
     if orderQuerySet.exists():      # If there are any items in the user's shopping cart that have been ordered
         order = orderQuerySet[0]    # Assigns the order found in the order query set to a variable
 
-        if order.items.filter(item__slug=product.slug).exists():  # If the requested item is already in the cart
+        if order.items.filter(item__slug=product.slug).exists():    # If the requested item is already in the cart
             orderItem.quantity += 1                                 # Increase the quantity of the ordered item by 1
             orderItem.save()                                        # Then save the changes made to the order item table
-        else:                                                       # If the requested item is not in the cat
+            messages.success(request, "Item quantity updated")
+            return response
+        else:                                                       # If the requested item is not in the cart
             order.items.add(orderItem)                              # Then add it to the cart
+            messages.success(request, "Item added to cart")
+            return response
     else:                                                   # If  there are not any items in the user's shopping cart that have been ordered
         currentTime = datetime.now()
         order = Order.objects.create(user=request.user, dateOrdered=currentTime)     # Create a new order for the user
-        order.items.add(orderItem)                          # Add the requested item to the newly requested order    
+        order.items.add(orderItem)                          # Add the requested item to the newly requested order   
+        messages.success(request, "Item added to cart") 
+        return response
 
-    response = redirect('coreFunctionality:productView', slug=slug)  # Once the item is added to the cart, the user is redirected back to the product page
-    return response
+
 
 
 def removeFromCart(request, slug):
@@ -66,10 +80,11 @@ def removeFromCart(request, slug):
             )[0]
 
             order.items.remove(orderItem)                           # Then remove it from the cart
-            print("Item removed")
+            messages.info(request, "Item removed from cart") 
+            return response             
         else:                   # If the requested item is not in the cart
-            print("Item not in cart")
+            messages.info(request, "Item not in cart") 
             return response     # Then there is nothing to remove to redirect the user back to the products page                       
     else:                       # If there are no items in the user's cart
+        messages.info(request, "Order does not exist") 
         return response         # Then there is nothing to remove to redirect the user back to the products page   
-    return response
