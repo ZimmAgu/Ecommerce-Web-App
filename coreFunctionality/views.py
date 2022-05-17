@@ -16,6 +16,7 @@ from datetime import datetime
 class homePageListView(ListView):
     model = Item
     template_name = "homepage.html"
+    paginate_by = 1
 
 
 def checkoutPage(request):
