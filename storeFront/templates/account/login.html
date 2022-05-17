@@ -1,21 +1,20 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% load i18n %}
 {% load account socialaccount %}
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-
-
-
 <main>
   <div class="container">
     <!--Section: Products v.3-->
-    <section class="text-center mb-4">
+    <section class="mb-4">
       <!--Grid row-->
       <div class="row wow fadeIn">
-        <div class="col-12">
+        <div class="col-6 offset-3">
           <h1>{% trans "Sign In" %}</h1>
           {% get_providers as socialaccount_providers %}
 
@@ -37,23 +36,38 @@
           {% include "socialaccount/snippets/login_extra.html" %}
 
           {% else %}
-          <p>{% blocktrans %}If you have not created an account yet, then please
-          <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+
           {% endif %}
 
           <form class="login" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form | crispy}}
             {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
             <button class="btn btn-primary btn-square" type="submit">{% trans "Sign In" %}</button>
-            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-          </form>
+            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a> <br />
+            <span>Don't have an account? <a class="button secondaryAction" href="{% url 'account_signup' %}">{% trans "Sign up" %}</a></span>
+          </form>    
         </div>
       </div>
     </section>
   </div>
+  
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <hr class="my-4">
+
+
+    <div class="pb-4">
+      For presentation purposes only.
+      No real products are being sold on this store
+    </div>
+
+    <div class="footer-copyright py-3">
+      
+    </div>
+  </footer>
 </main>
 
 {% endblock %}

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +148,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 SITE_ID = 1
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
