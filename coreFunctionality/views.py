@@ -8,21 +8,25 @@ def homePage(request):
     context = { 'items' : Item.objects.all() }      # Assigns all items on the store to the variable name "items"
     return render(request, "homepage.html/", context)
 
+
 def checkoutPage(request):
     return render(request, "checkoutPage.html/")
+
 
 def productPage(request, slug):
     product = get_object_or_404(Item, slug=slug)    # Returns the item with the requested slug
     context = {'item' : product}                    # Assigns the returned produce the name "item"       
     return render(request, "productPage.html/", context)
 
+
 def addToCart(request, slug):
     product = get_object_or_404(Item, slug=slug)            # Returns the item with the requested slug
 
-    orderItem, created = OrderItem.objects.get_or_create(   # Adds an instance of the requested item to the OrderItem table
-            item=product, 
-            user=request.user, 
-            ordered=False)  
+    orderItem, created = OrderItem.objects.get_or_create(   # Finds (or adds) an instance of the requested item to the OrderItem table
+        item=product, 
+        user=request.user, 
+        ordered=False
+    )  
 
     orderQuerySet = Order.objects.filter(user=request.user, ordered=False)  # The items in the current user's shopping cart that have not been ordered
 
@@ -40,4 +44,32 @@ def addToCart(request, slug):
         order.items.add(orderItem)                          # Add the requested item to the newly requested order    
 
     response = redirect('coreFunctionality:productView', slug=slug)  # Once the item is added to the cart, the user is redirected back to the product page
+    return response
+
+
+def removeFromCart(request, slug):
+    product = get_object_or_404(Item, slug=slug)            # Returns the item with the requested slug
+
+    orderQuerySet = Order.objects.filter(user=request.user, ordered=False)  # The items in the current user's shopping cart that have not been ordered
+
+    response = redirect('coreFunctionality:productView', slug=slug)  # Once the item is added to the cart, the user is redirected back to the product page
+
+
+    if orderQuerySet.exists():      # If there are any items in the user's shopping cart that have been ordered
+        order = orderQuerySet[0]    # Assigns the order found in the order query set to a variable
+
+        if order.items.filter(item__slug=product.slug).exists():    # If the requested item is already in the cart
+            orderItem = OrderItem.objects.filter(                   # Finds an instance of the requested item to the OrderItem table
+                item=product, 
+                user=request.user, 
+                ordered=False
+            )[0]
+
+            order.items.remove(orderItem)                           # Then remove it from the cart
+            print("Item removed")
+        else:                   # If the requested item is not in the cart
+            print("Item not in cart")
+            return response     # Then there is nothing to remove to redirect the user back to the products page                       
+    else:                       # If there are no items in the user's cart
+        return response         # Then there is nothing to remove to redirect the user back to the products page   
     return response

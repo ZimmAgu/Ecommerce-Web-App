@@ -34,6 +34,9 @@ class Item(models.Model):                  # Stores individual items that can be
 
     def get_Add_To_Cart_URL(self):
         return reverse('coreFunctionality:addToCartView', kwargs={'slug' : self.slug})
+    
+    def get_Remove_From_Cart_URL(self):
+        return reverse('coreFunctionality:removeFromCartView', kwargs={'slug' : self.slug})
 
 
 
