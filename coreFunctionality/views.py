@@ -46,7 +46,7 @@ def addToCart(request, slug):
     )  
 
     orderQuerySet = Order.objects.filter(user=request.user, ordered=False)  # The items in the current user's shopping cart that have not been ordered
-    response = redirect('coreFunctionality:productView', slug=slug)  
+    response = redirect('coreFunctionality:orderSummaryView')  
 
 
     if orderQuerySet.exists():      # If there are any items in the user's shopping cart that have been ordered

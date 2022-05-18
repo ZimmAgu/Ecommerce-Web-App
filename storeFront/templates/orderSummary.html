@@ -75,7 +75,9 @@
             <td>
               <a href="{% url 'coreFunctionality:remove-Single-Item-From-Cart-View' orderItem.item.slug %}">
                 <i class="fas fa-minus-circle mr-1"></i>
+              </a>
                   {{ orderItem.quantity }} 
+              <a href="{% url 'coreFunctionality:addToCartView' orderItem.item.slug %}">
                 <i class="fas fa-plus-circle ml-1"></i>
               </a>
             </td>
@@ -90,7 +92,7 @@
           </tr>
           <tr>
             <th colspan="5">
-              <a href="/checkout/" class="btn btn-warning float-right text-dark">Proceed to checkout </a>
+              <a href="{% url 'coreFunctionality:checkoutView' %}" class="btn btn-warning float-right text-dark">Proceed to checkout </a>
               <a href="/" class="btn btn-primary float-right mr-3">Continue shopping </a>
             </th>
           </tr>
