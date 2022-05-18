@@ -72,10 +72,16 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ orderItem.item.name }}</td>
             <td>${{ orderItem.item.price }}</td>
-            <td>{{ orderItem.quantity }}</td>
+            <td>
+              <i class="fas fa-minus-circle mr-1"></i>
+                {{ orderItem.quantity }} 
+              <i class="fas fa-plus-circle ml-1"></i>
+            </td>
             <td>${{ orderItem.get_Total_Price }}</td>
           </tr>
           {% endfor %}
+
+          {% if order.get_Total_Order_Price %}
           <tr>
             <th scope="row" colspan="4">Order Total</th>
             <td>${{ order.get_Total_Order_Price }}</td>
@@ -83,9 +89,10 @@
           <tr>
             <th colspan="5">
               <a href="/checkout/" class="btn btn-warning float-right text-dark">Proceed to checkout </a>
-              <a href="/" class="btn btn-primary float-right">Continue shopping </a>
+              <a href="/" class="btn btn-primary float-right mr-3">Continue shopping </a>
             </th>
           </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
