@@ -6,6 +6,11 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.views.generic import ListView
 from django.views import View
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Model imports
 from . models import Item, OrderItem, Order
@@ -28,7 +33,7 @@ def productPage(request, slug):
     context = {'item' : product}                    # Assigns the returned produce the name "item"       
     return render(request, "productPage.html/", context)
 
-
+@login_required # Makes it a requirement for the user to be logged in to add anything to their cart
 def addToCart(request, slug):
     product = get_object_or_404(Item, slug=slug)            # Returns the item with the requested slug
 
@@ -63,7 +68,7 @@ def addToCart(request, slug):
 
 
 
-
+@login_required # Makes it a requirement for the user to be logged in to remove anything from their cart
 def removeFromCart(request, slug):
     product = get_object_or_404(Item, slug=slug)            # Returns the item with the requested slug
 
@@ -93,9 +98,16 @@ def removeFromCart(request, slug):
         return response         # Then there is nothing to remove to redirect the user back to the products page  
 
 
-class orderSummary(View):
+class orderSummary(LoginRequiredMixin,View):
     model = Order
     template_name = "orderSummary.html"
+    
 
     def get(self, *args, **kwargs):
-        return render(self.request, self.template_name)
+        try:                                                                    # If an order exists
+            order = Order.objects.get(user=self.request.user, ordered=False)    #They get it
+            context = {'order' : order}   
+            return render(self.request, self.template_name, context)
+        except ObjectDoesNotExist:
+            messages.error(self.request, "Order does not exist")
+            return redirect('/')

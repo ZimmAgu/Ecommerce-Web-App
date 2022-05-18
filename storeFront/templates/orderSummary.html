@@ -50,64 +50,37 @@
 
 {% block content %}
 <body>
+  <main>
+  <div class="container">
+    <h2>Order Summary</h2>
     <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Price</th>
+          </tr>
+        </thead>
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-              <th scope="col">Heading</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-              <td>Cell</td>
-            </tr>
-          </tbody>
-        </table>
-      
-      </div>
+        {% for orderItem in order.items.all %}
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>{{ orderItem.item.name }}</td>
+            <td>{{ orderItem.item.price }}</td>
+            <td>{{ orderItem.quantity }}</td>
+            <td>IDK yet</td>
+          </tr>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  </main>
 </body>
 {% endblock content %}
 
