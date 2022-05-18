@@ -51,6 +51,9 @@ class OrderItem(models.Model):                                  # Once a user ad
 
     def __str__(self):
         return f"{self.quantity} of {self.item.name}"
+    
+    def get_total_price(self):
+        return self.quantity * self.item.price
 
 
 class Order(models.Model):                              # Stores all of the items that the user has added to the cart

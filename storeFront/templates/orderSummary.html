@@ -70,9 +70,9 @@
           <tr>
             <th scope="row">1</th>
             <td>{{ orderItem.item.name }}</td>
-            <td>{{ orderItem.item.price }}</td>
+            <td>${{ orderItem.item.price }}</td>
             <td>{{ orderItem.quantity }}</td>
-            <td>IDK yet</td>
+            <td>${{ orderItem.get_total_price }}</td>
           </tr>
           </tr>
         </tbody>
