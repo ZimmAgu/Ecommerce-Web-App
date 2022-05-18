@@ -77,14 +77,16 @@
           </tr>
           {% endfor %}
           <tr>
-            <th scope="row">Order Total</th>
-            <td></td>
-            <td></td>
-            <td></td>
+            <th scope="row" colspan="4">Order Total</th>
             <td>${{ order.get_Total_Order_Price }}</td>
           </tr>
+          <tr>
+            <th colspan="5">
+              <a href="/checkout/" class="btn btn-warning float-right text-dark">Proceed to checkout </a>
+              <a href="/" class="btn btn-primary float-right">Continue shopping </a>
+            </th>
+          </tr>
         </tbody>
-        
       </table>
     </div>
   </div>
