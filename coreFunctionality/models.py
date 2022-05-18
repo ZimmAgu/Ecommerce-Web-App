@@ -52,7 +52,7 @@ class OrderItem(models.Model):                                  # Once a user ad
     def __str__(self):
         return f"{self.quantity} of {self.item.name}"
     
-    def get_total_price(self):
+    def get_Total_Price(self):
         return self.quantity * self.item.price
 
 
@@ -67,3 +67,10 @@ class Order(models.Model):                              # Stores all of the item
 
     def __str__(self):
         return self.user.username                       # Orders will be listed in the database using the username of the user that has made the order
+
+    def get_Total_Order_Price(self):
+        total = 0
+
+        for orderItem in self.items.all():
+            total += orderItem.get_Total_Price()
+        return total

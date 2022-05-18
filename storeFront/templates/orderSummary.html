@@ -65,18 +65,26 @@
           </tr>
         </thead>
 
-        {% for orderItem in order.items.all %}
+        
         <tbody>
+          {% for orderItem in order.items.all %}
           <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ orderItem.item.name }}</td>
             <td>${{ orderItem.item.price }}</td>
             <td>{{ orderItem.quantity }}</td>
-            <td>${{ orderItem.get_total_price }}</td>
+            <td>${{ orderItem.get_Total_Price }}</td>
           </tr>
+          {% endfor %}
+          <tr>
+            <th scope="row">Order Total</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>${{ order.get_Total_Order_Price }}</td>
           </tr>
         </tbody>
-        {% endfor %}
+        
       </table>
     </div>
   </div>
