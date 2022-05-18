@@ -73,9 +73,11 @@
             <td>{{ orderItem.item.name }}</td>
             <td>${{ orderItem.item.price }}</td>
             <td>
-              <i class="fas fa-minus-circle mr-1"></i>
-                {{ orderItem.quantity }} 
-              <i class="fas fa-plus-circle ml-1"></i>
+              <a href="{% url 'coreFunctionality:remove-Single-Item-From-Cart-View' orderItem.item.slug %}">
+                <i class="fas fa-minus-circle mr-1"></i>
+                  {{ orderItem.quantity }} 
+                <i class="fas fa-plus-circle ml-1"></i>
+              </a>
             </td>
             <td>${{ orderItem.get_Total_Price }}</td>
           </tr>
