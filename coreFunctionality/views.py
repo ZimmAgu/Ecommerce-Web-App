@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.views.generic import ListView
-from django.core.paginator import Paginator
+from django.views import View
 
 # Model imports
 from . models import Item, OrderItem, Order
@@ -13,7 +13,7 @@ from . models import Item, OrderItem, Order
 # Miscellaneous imports
 from datetime import datetime
 
-class homePageListView(ListView):
+class homePage(ListView):
     model = Item                        # Model that this view is based on
     template_name = "homepage.html"     # Template that this view is used to bring up
     paginate_by = 1                     # Amount of items that go on each page
@@ -90,4 +90,12 @@ def removeFromCart(request, slug):
             return response     # Then there is nothing to remove to redirect the user back to the products page                       
     else:                       # If there are no items in the user's cart
         messages.info(request, "Order does not exist") 
-        return response         # Then there is nothing to remove to redirect the user back to the products page   
+        return response         # Then there is nothing to remove to redirect the user back to the products page  
+
+
+class orderSummary(View):
+    model = Order
+    template_name = "orderSummary.html"
+
+    def get(self, *args, **kwargs):
+        return render(self.request, self.template_name)
