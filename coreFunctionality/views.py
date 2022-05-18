@@ -76,7 +76,8 @@ def removeFromCart(request, slug):
 
     orderQuerySet = Order.objects.filter(user=request.user, ordered=False)  # The items in the current user's shopping cart that have not been ordered
 
-    response = redirect('coreFunctionality:productView', slug=slug)  # Once the item is added to the cart, the user is redirected back to the product page
+    productViewResponse = redirect('coreFunctionality:productView', slug=slug)  # Once the item is added to the cart, the user is redirected back to the product page
+    orderSummaryViwResponse = redirect('coreFunctionality:orderSummaryView')  
 
 
     if orderQuerySet.exists():      # If there are any items in the user's shopping cart that have been ordered
@@ -90,15 +91,14 @@ def removeFromCart(request, slug):
             )[0]
 
             order.items.remove(orderItem)                           # Then remove it from the cart
-            order.save() 
             messages.info(request, "Item removed from cart") 
-            return response             
+            return orderSummaryViwResponse             
         else:                   # If the requested item is not in the cart
             messages.info(request, "Item not in cart") 
-            return response     # Then there is nothing to remove to redirect the user back to the products page                       
-    else:                       # If there are no items in the user's cart
+            return productViewResponse      # Then there is nothing to remove to redirect the user back to the products page                       
+    else:                                   # If there are no items in the user's cart
         messages.info(request, "You do not have an active order") 
-        return response         # Then there is nothing to remove to redirect the user back to the products page  
+        return productViewResponse          # Then there is nothing to remove to redirect the user back to the products page  
 
 
 
