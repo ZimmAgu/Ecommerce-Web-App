@@ -121,7 +121,8 @@ def remove_Single_Cart_Item(request, slug):
                 ordered=False
             )[0]
 
-            orderItem.quantity -= 1                                 # lower the quanity by one
+            if orderItem.quantity > 1:      # (This if statement ensures the user will not be able to lower the quanitity lower than 1)
+                orderItem.quantity -= 1     # lower the quanity by one
             orderItem.save()  
             messages.info(request, "Item quantity has been updated") 
             return response             
