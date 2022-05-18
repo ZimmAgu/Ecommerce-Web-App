@@ -68,7 +68,7 @@
         {% for orderItem in order.items.all %}
         <tbody>
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">{{ forloop.counter }}</th>
             <td>{{ orderItem.item.name }}</td>
             <td>${{ orderItem.item.price }}</td>
             <td>{{ orderItem.quantity }}</td>
