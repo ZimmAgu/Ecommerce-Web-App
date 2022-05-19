@@ -11,9 +11,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-# Model imports
+# Folder imports
 from . models import Item, OrderItem, Order
+from .forms import checkoutForm
 
 # Miscellaneous imports
 from datetime import datetime
@@ -24,9 +24,19 @@ class homePage(ListView):
     paginate_by = 1                     # Amount of items that go on each page
 
 
-def checkoutPage(request):
-    return render(request, "checkoutPage.html/")
+class checkoutPage(View):
 
+    def get(self, *args, **kwargs):
+        form = checkoutForm()
+        context = { 'form' : form}
+        return render(self.request, "checkoutPage.html/", context)
+
+
+    def post(self, *args, **kwargs):
+        form = checkoutForm(self.request.POST)
+        print("form works")
+        return redirect('coreFunctionality:checkoutView')
+        
 
 def productPage(request, slug):
     product = get_object_or_404(Item, slug=slug)    # Returns the item with the requested slug
