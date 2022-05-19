@@ -7,7 +7,8 @@ from django.urls import reverse
 CATEGORIES = (  # Left value of each tuple element is what is deisplayed in the data base. Right value of each tuple element is what is displayed on screen
     ('S', 'Shirt'),
     ('SW', 'Sports Wear'),
-    ('OW', 'Outwear'),
+    ('J', 'Jacket'),
+    ('P', 'Pants'),
 )
 
 LABELCHOICES = (    # Color choices for the labels. Primary, secondary & danger 
@@ -25,6 +26,7 @@ class Item(models.Model):                  # Stores individual items that can be
     label = models.CharField(max_length=1, choices=LABELCHOICES, default='P')    # Type of label that an item has (if it has one)
     slug = models.SlugField()
     description = models.TextField(default="This is a product")
+    image_Url = models.TextField(default="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg")
 
     def __str__(self):
         return self.name                    # Items will be listed in the database using the item name

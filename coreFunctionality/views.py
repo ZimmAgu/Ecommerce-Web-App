@@ -21,7 +21,7 @@ from datetime import datetime
 class homePage(ListView):
     model = Item                        # Model that this view is based on
     template_name = "homepage.html"     # Template that this view is used to bring up
-    paginate_by = 1                     # Amount of items that go on each page
+    paginate_by = 8                     # Amount of items that go on each page
 
 
 class checkoutPage(LoginRequiredMixin, View):
