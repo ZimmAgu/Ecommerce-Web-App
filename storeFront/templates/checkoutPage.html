@@ -39,11 +39,6 @@
 
           <!--Card-->
           <div class="card">
-            <form>
-              {{ form | crispy}}
-              <button type="button" class="btn btn-primary">Checkout</button>
-            </form>
-
             <!--Card content-->
             <form class="card-body">
               {% csrf_token %}
@@ -75,13 +70,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
 
                   <label for="state">State</label>
-                  <select class="custom-select d-block w-100" id="state" required>
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
+                  {{ form.state }}
 
                 </div>
                 <!--Grid column-->
@@ -96,18 +85,6 @@
               </div>
               <!--Grid row-->
 
-              <!-- <hr>
-
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="same-address">
-                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-              </div>
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="save-info">
-                <label class="custom-control-label" for="save-info">Save this information for next time</label>
-              </div>
-
-              <hr> -->
 
               <div class="d-block my-3">
                 {% for value, name in form.fields.paymentChoice.choices %}

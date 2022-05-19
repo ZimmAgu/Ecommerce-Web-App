@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Folder imports
 from . models import Item, OrderItem, Order
-from .forms import checkoutForm
+from .forms.forms import checkoutForm
 
 # Miscellaneous imports
 from datetime import datetime
