@@ -24,7 +24,7 @@ class homePage(ListView):
     paginate_by = 1                     # Amount of items that go on each page
 
 
-class checkoutPage(View):
+class checkoutPage(LoginRequiredMixin, View):
     model = Order
     def get(self, *args, **kwargs):
         form = checkoutForm()
@@ -35,13 +35,17 @@ class checkoutPage(View):
 
     def post(self, *args, **kwargs):
         form = checkoutForm(self.request.POST or None)
+        order = Order.objects.get(user=self.request.user, ordered=False) 
         print(self.request.POST)
         print("Errors Next")
         print(form.errors)
         if form.is_valid():
             print(form.cleaned_data)
+            order.ordered = True
+            order.save()
+            print(order.ordered)
             print("form works")
-            return redirect('coreFunctionality:checkoutView')
+            return redirect('coreFunctionality:homepage')
         print("form didn't work")
         
 
@@ -152,7 +156,7 @@ def remove_Single_Cart_Item(request, slug):
 
 
 
-class orderSummary(LoginRequiredMixin,View):
+class orderSummary(LoginRequiredMixin, View):
     model = Order
     template_name = "orderSummary.html"
     
