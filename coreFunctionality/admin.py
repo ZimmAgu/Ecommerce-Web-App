@@ -1,4 +1,5 @@
 # Register your models here.
+# Super user is Username: admin, Password: admin
 from django.contrib import admin
 from . models import Item, OrderItem, Order
 

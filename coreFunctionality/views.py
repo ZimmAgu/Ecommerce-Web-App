@@ -36,17 +36,14 @@ class checkoutPage(LoginRequiredMixin, View):
     def post(self, *args, **kwargs):
         form = checkoutForm(self.request.POST or None)
         order = Order.objects.get(user=self.request.user, ordered=False) 
-        print(self.request.POST)
-        print("Errors Next")
-        print(form.errors)
+
         if form.is_valid():
-            print(form.cleaned_data)
             order.ordered = True
             order.save()
-            print(order.ordered)
-            print("form works")
+            messages.success(self.request, "Mock order completed successfully")
             return redirect('coreFunctionality:homepage')
-        print("form didn't work")
+        else:
+            messages.warning(self.request, "There was a problem completing the order")
         
 
 def productPage(request, slug):
