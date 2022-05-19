@@ -25,10 +25,11 @@ class homePage(ListView):
 
 
 class checkoutPage(View):
-
+    model = Order
     def get(self, *args, **kwargs):
         form = checkoutForm()
-        context = { 'form' : form}
+        order = Order.objects.get(user=self.request.user, ordered=False) 
+        context = { 'form' : form, 'order' : order}
         return render(self.request, "checkoutPage.html/", context)
 
 
