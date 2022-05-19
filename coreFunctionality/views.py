@@ -34,8 +34,10 @@ class checkoutPage(View):
 
     def post(self, *args, **kwargs):
         form = checkoutForm(self.request.POST)
-        print("form works")
-        return redirect('coreFunctionality:checkoutView')
+        if form.is_valid():
+            print(form.cleaned_data())
+            print("form works")
+            return redirect('coreFunctionality:checkoutView')
         
 
 def productPage(request, slug):
