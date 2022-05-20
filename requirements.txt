@@ -34,6 +34,8 @@ defusedxml==0.7.1
 distlib==0.3.4
 Django==4.0.4
 django-allauth==0.50.0
+django-countries==7.3.2
+django-crispy-forms==1.14.0
 docutils==0.18.1
 entrypoints==0.3
 exchange-calendars==3.4
